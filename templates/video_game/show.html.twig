@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ game.name }} | Jeux vidéos
+{% endblock %}
+
+{% block body %}
+    <section class="section">
+
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="{{ path('app_video_game_index') }}">Jeux vidéos</a></li>
+                <li class="is-active"><a href="{{ app.request.pathInfo }}" aria-current="page">{{ game.name }}</a></li>
+            </ul>
+        </nav>
+
+        <div class="container mb-2">
+            <h1 class="title">{{ game.name }}</h1>
+        </div>
+
+        <div class="card">
+            <header class="card-header">
+                <p class="card-header-title">Détails du jeu</p>
+            </header>
+            <div class="card-content">
+                <div class="content">
+                    <ul>
+                        <li>Nom : {{ game.name }}</li>
+                        <li>Difficulté : {{ game.difficulty }}/ 5</li>
+                        {% if game.synopsis is not empty %}
+                            <li>Synopsis : {{ game.synopsis }}</li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+

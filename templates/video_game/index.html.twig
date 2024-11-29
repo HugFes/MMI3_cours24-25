@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Video Games{% endblock %}
+
+{% block body %}
+    <section class="section">
+        <div class="container mb-2">
+            <h1 class="title">Jeux vidéos</h1>
+        </div>
+
+        {% if games is empty %}
+            {# Notification de l'utilisateur si aucun résultat #}
+            <article class="message is-info">
+                <div class="message-body">
+                    <p>Aucun résultat</p>
+                </div>
+            </article>
+        {% else %}
+            {# Affichage des différents jeux #}
+            <table class="table is-striped">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Difficulté</th>
+                        <th>Synopsys</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for game in games %}
+                        <tr>
+                            <td>{{ game.name }}</td>
+                            <td>{{ game.difficulty }}</td>
+                            <td>{{ game.synopsis }}</td>
+                            <td><a class="button is-light is-small" href="{{ path('app_video_game_show', {id: game.id}) }}">Voir</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </section>
+{% endblock %}

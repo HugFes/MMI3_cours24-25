@@ -23,3 +23,7 @@
 /public/assets/
 /assets/vendor/
 ###< symfony/asset-mapper ###
+
+###> IDE ###
+.idea
+###< IDE ###
