@@ -1,0 +1,4 @@
+app:
+  form:
+    name: Nom
+    difficulty: Difficulté du jeu

@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ game.name }} | Jeux vidéos
+{% endblock %}
+
+{% block body %}
+    <section class="section">
+
+        {% include 'video_game/common/_breadcrumb.html.twig' %}
+
+        <div class="container mb-2">
+            <h1 class="title">Édition du jeu : {{ game.name }}</h1>
+        </div>
+
+        <div class="card">
+            <div class="card-content">
+                <div class="content">
+                    {{ form_start(form) }}
+                        {% include 'video_game/common/_form.html.twig' %}
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+

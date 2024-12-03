@@ -32,7 +32,10 @@
                             <td>{{ game.name }}</td>
                             <td>{{ game.difficulty }}</td>
                             <td>{{ game.synopsis }}</td>
-                            <td><a class="button is-light is-small" href="{{ path('app_video_game_show', {id: game.id}) }}">Voir</a></td>
+                            <td class="buttons">
+                                <a class="button is-light is-small" href="{{ path('app_video_game_show', {id: game.id}) }}">Voir</a>
+                                <a class="button is-info is-small" href="{{ path('app_video_game_edit', {id: game.id}) }}">Éditer</a>
+                            </td>
                         </tr>
                     {% endfor %}
                 </tbody>

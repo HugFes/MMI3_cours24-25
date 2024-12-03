@@ -9,6 +9,6 @@
 * symfony-cli
 
 
-## Info complémentaires
+## Infos complémentaires
 
 * Librairie front utilisée : [Bulma](https://bulma.io/)
