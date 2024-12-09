@@ -39,7 +39,7 @@ class VideoGameController extends AbstractController
         // $this->videoGameRepository->findOneBy(['id' => $id]);
 
         if ($videoGame === null) {
-            throw new $this->createNotFoundException('Video game not found');
+            throw $this->createNotFoundException('Video game not found');
         }
 
         return $this->render('video_game/show.html.twig', [
@@ -47,19 +47,27 @@ class VideoGameController extends AbstractController
         ]);
     }
 
-    /**
-     * Ici, contrairement à la méthode "show" l'objet VideoGame est mappé directement depuis la requête
-     *
-     */
-    #[Route('/video-game/{id}/edit', name: 'app_video_game_edit', requirements: ['id' => '\d+'], methods: ['GET', 'PUT', 'POST'])]
-    public function edit(VideoGame $videoGame, Request $request): Response
+    #[Route('/video-game/{id}/edit', name: 'app_video_game_edit', requirements: ['id' => '\d+'], methods: ['GET', 'PUT'])]
+    public function edit(int $id, Request $request): Response
     {
-        $form = $this->createForm(VideoGameType::class, $videoGame);
+        $videoGame = $this->videoGameRepository->find($id);
+        if ($videoGame === null) {
+            // Déclenchement d'une erreur 404 si aucun jeu vidéo à cet ID
+            throw $this->createNotFoundException('Video game not found');
+        }
+
+
+        $form = $this->createForm(VideoGameType::class, $videoGame, [
+            'method' => 'PUT',
+        ]);
 
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
-            // TODO
+            $videoGame = $form->getData();
+            // On peut directement faire un "flush" car le Jeu vidéo est en cours de traitement par l'EntityManager
+            // L'objet est modifié par le formulaire. Il s'agit de la même instance de l'objet VidéoGame
+            $this->entityManager->flush();
+            return $this->redirectToRoute('app_video_game_show', ['id' => $videoGame->getId()]);
         }
 
         return $this->render('video_game/edit.html.twig', [

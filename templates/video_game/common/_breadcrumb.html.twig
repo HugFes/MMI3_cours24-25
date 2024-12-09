@@ -1,7 +1,7 @@
 <nav class="breadcrumb" aria-label="breadcrumbs">
     <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="{{ path('app_video_game_index') }}">Jeux vidéos</a></li>
-        <li class="is-active"><a href="{{ app.request.pathInfo }}" aria-current="page">{{ game.name }}</a></li>
+        {% for item in items %}
+        <li><a href="{{ item.href }}" class="{{ item.is_active ? 'is-active' }}">{{ item.label }}</a></li>
+        {% endfor %}
     </ul>
 </nav>

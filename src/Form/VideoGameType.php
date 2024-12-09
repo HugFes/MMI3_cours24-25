@@ -15,7 +15,10 @@ class VideoGameType extends AbstractType
         $builder
             ->add('name', null, [
                 'required' => true,
-                'label' => 'app.form.name',
+                'label' => 'Nom',
+                'constraints' => [
+                    new NotBlank(),
+                ]
             ])
             ->add('difficulty', ChoiceType::class, [
                 'required' => true,

@@ -7,25 +7,35 @@
 {% block body %}
     <section class="section">
 
-        {% include 'video_game/common/_breadcrumb.html.twig' %}
+        {% include 'video_game/common/_breadcrumb.html.twig' with { items: [
+            { label: 'Home', href: '#', is_active: false},
+            { label: 'Jeux vidéos', href: path('app_video_game_index'), is_active: false},
+            { label: game.name, href: path('app_video_game_show', {id: game.id}), is_active: true},
+        ]} %}
 
-        <div class="container mb-2">
-            <h1 class="title">{{ game.name }}</h1>
-        </div>
-
-        <div class="card">
-            <header class="card-header">
-                <p class="card-header-title">Détails du jeu</p>
-            </header>
-            <div class="card-content">
-                <div class="content">
-                    <ul>
-                        <li>Nom : {{ game.name }}</li>
-                        <li>Difficulté : {{ game.difficulty }}/ 5</li>
-                        {% if game.synopsis is not empty %}
-                            <li>Synopsis : {{ game.synopsis }}</li>
-                        {% endif %}
-                    </ul>
+        <div class="container">
+            <div class=" columns mb-2">
+                <div class="column">
+                    <h1 class="title">{{ game.name }}</h1>
+                </div>
+                <div class="column is-flex is-justify-content-end">
+                    <a class="button" href="{{ path('app_video_game_edit', {id: game.id}) }}">Éditer</a>
+                </div>
+            </div>
+            <div class="card">
+                <header class="card-header">
+                    <p class="card-header-title">Détails du jeu</p>
+                </header>
+                <div class="card-content">
+                    <div class="content">
+                        <ul>
+                            <li>Nom : {{ game.name }}</li>
+                            <li>Difficulté : {{ game.difficulty }}/ 5</li>
+                            {% if game.synopsis is not empty %}
+                                <li>Synopsis : {{ game.synopsis }}</li>
+                            {% endif %}
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
