@@ -14,6 +14,8 @@
             { label: 'Edit', href: path('app_video_game_edit', {id: game.id}), is_active: true},
         ]} %}
 
+        {% include 'common/_flashes.html.twig' %}
+
         <div class="container mb-2">
             <h1 class="title">Édition du jeu : {{ game.name }}</h1>
         </div>

@@ -67,6 +67,8 @@ class VideoGameController extends AbstractController
             // On peut directement faire un "flush" car le Jeu vidéo est en cours de traitement par l'EntityManager
             // L'objet est modifié par le formulaire. Il s'agit de la même instance de l'objet VidéoGame
             $this->entityManager->flush();
+
+            $this->addFlash('success', 'Video game updated.');
             return $this->redirectToRoute('app_video_game_show', ['id' => $videoGame->getId()]);
         }
 

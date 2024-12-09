@@ -13,6 +13,8 @@
             { label: game.name, href: path('app_video_game_show', {id: game.id}), is_active: true},
         ]} %}
 
+        {% include 'common/_flashes.html.twig' %}
+
         <div class="container">
             <div class=" columns mb-2">
                 <div class="column">
