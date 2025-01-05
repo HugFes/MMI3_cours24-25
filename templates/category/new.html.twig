@@ -1,21 +1,18 @@
-
 {% extends 'base.html.twig' %}
 
-{% block title %}
-    Création d'un jeu | Jeux vidéos
-{% endblock %}
+{% block title %}Création d'une catégorie{% endblock %}
 
 {% block breadcrumbs %}
     {% include 'common/_breadcrumb.html.twig' with { items: [
         { label: 'Home', href: path('home'), is_active: false},
-        { label: 'Jeux vidéos', href: path('app_video_game_index'), is_active: false},
-        { label: 'Créer un jeux vidéo', href: path('app_video_game_new'), is_active: true},
+        { label: 'Catégories', href: path('app_category_index'), is_active: false},
+        { label: 'Créer une catégorie', href: path('app_category_new'), is_active: true},
     ]} %}
 {% endblock %}
 
 {% block body %}
     <div class="container mb-2">
-        <h1 class="title">Créer un jeu vidéo</h1>
+        <h1 class="title">Créer une catégorie</h1>
     </div>
 
     <div>
@@ -23,8 +20,8 @@
             <div class="card-content">
                 <div class="content">
                     {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
-                    {% include 'video_game/common/_form.html.twig' %}
-                    <a href="{{ path('app_video_game_index') }}" class="button is-danger">Annuler</a>
+                    {% include 'category/common/_form.html.twig' %}
+                    <a href="{{ path('app_category_index') }}" class="button is-danger">Annuler</a>
                     <button class="button is-primary" type="submit">Créer</button>
                     {{ form_end(form) }}
                 </div>
@@ -32,6 +29,3 @@
         </div>
     </div>
 {% endblock %}
-
-
-

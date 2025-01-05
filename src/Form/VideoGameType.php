@@ -2,6 +2,8 @@
 
 namespace App\Form;
 
+use App\Entity\Category;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -19,10 +21,19 @@ class VideoGameType extends AbstractType
             ])
             ->add('difficulty', ChoiceType::class, [
                 'required' => true,
-                'label' => 'app.form.difficulty',
+                'label' => 'Difficulté',
                 'choices' => $this->getChoice(),
             ])
-            ->add('synopsis', TextareaType::class, []);
+            ->add('synopsis', TextareaType::class, [])
+            ->add('categories', EntityType::class, [
+                'label' => 'Catégories',
+                'class' => Category::class,
+                'expanded' => true,
+                'multiple' => true,
+                'choice_label' => 'name',
+                'choice_value' => 'id',
+            ])
+        ;
     }
 
     protected function getChoice(): array

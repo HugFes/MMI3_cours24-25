@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Categorie : {{ category.name }}{% endblock %}
+
+{% block breadcrumbs %}
+    {% include 'common/_breadcrumb.html.twig' with { items: [
+        { label: 'Home', href: path('home'), is_active: false},
+        { label: 'Catégories', href: path('app_category_index'), is_active: false},
+        { label: category.name, href: path('app_category_show', {id: category.id}), is_active: true},
+    ]} %}
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="columns mb-2">
+            <div class="column">
+                <h1 class="title">{{ category.name }}</h1>
+            </div>
+            <div class="column is-flex is-justify-content-end">
+                <a class="button" href="{{ path('app_category_edit', {id: category.id}) }}">Éditer</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <header class="card-header">
+                <p class="card-header-title">Détails de la catégorie</p>
+            </header>
+            <div class="card-content">
+                <div class="content">
+                    <ul>
+                        <li>Nom : {{ category.name }}</li>
+                        <li>Shortname : {{ category.name }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
