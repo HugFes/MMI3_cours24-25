@@ -1,33 +1,6 @@
-{#{% form_theme form 'common/form_theme.html.twig' %}#}
+{% form_theme form 'common/bulma_form_theme.html.twig' %}
 
-{#{{ form_errors(form) }}#}
-{#{{ form_row(form.name) }}#}
-{#{{ form_row(form.difficulty) }}#}
-{#{{ form_row(form.synopsis) }}#}
-
-{# ============================================================ #}
-
-<div class="field">
-    {{ form_label(form.name, null, {label_attr: { class: 'label' }}) }}
-    {{ form_errors(form.name) }}
-    {{ form_help(form.name) }}
-    <div class="control">
-        {{ form_widget(form.name, {attr: {class: 'input'}}) }}
-    </div>
-</div>
-
-<div class="field">
-    {{ form_label(form.difficulty, null, {label_attr: { class: 'label' }}) }}
-    <div class="control">
-        <div class="select">
-            {{ form_widget(form.difficulty, {attr: {class: 'input'}}) }}
-        </div>
-    </div>
-</div>
-
-<div class="field">
-    {{ form_label(form.synopsis, null, {label_attr: { class: 'label' }}) }}
-    <div class="control">
-        {{ form_widget(form.synopsis, {attr: {class: 'textarea'}}) }}
-    </div>
-</div>
+{{ form_errors(form) }}
+{{ form_row(form.name) }}
+{{ form_row(form.difficulty) }}
+{{ form_row(form.synopsis) }}

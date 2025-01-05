@@ -16,9 +16,6 @@ class VideoGameType extends AbstractType
             ->add('name', null, [
                 'required' => true,
                 'label' => 'Nom',
-                'constraints' => [
-                    new NotBlank(),
-                ]
             ])
             ->add('difficulty', ChoiceType::class, [
                 'required' => true,

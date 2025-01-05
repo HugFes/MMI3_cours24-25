@@ -2,44 +2,63 @@
 
 {% block title %}Video Games{% endblock %}
 
+{% block breadcrum %}
+    {% include 'video_game/common/_breadcrumb.html.twig' with { items: [
+        { label: 'Home', href: path('home'), is_active: false},
+        { label: 'Jeux vidéos', href: path('app_video_game_index'), is_active: true},
+    ]} %}
+{% endblock %}
+
 {% block body %}
-    <section class="section">
-        <div class="container mb-2">
+    <div class="container columns mb-2">
+        <div class="column px-0">
             <h1 class="title">Jeux vidéos</h1>
         </div>
+        <div class="column px-0">
+            <div class="column is-flex is-justify-content-end">
+                <a class="button" href="{{ path('app_video_game_new') }}">Créer</a>
+            </div>
 
-        {% if games is empty %}
-            {# Notification de l'utilisateur si aucun résultat #}
-            <article class="message is-info">
-                <div class="message-body">
-                    <p>Aucun résultat</p>
-                </div>
-            </article>
-        {% else %}
-            {# Affichage des différents jeux #}
-            <table class="table is-striped">
-                <thead>
-                    <tr>
-                        <th>Nom</th>
-                        <th>Difficulté</th>
-                        <th>Synopsys</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for game in games %}
-                        <tr>
-                            <td>{{ game.name }}</td>
-                            <td>{{ game.difficulty }}</td>
-                            <td>{{ game.synopsis }}</td>
-                            <td class="buttons">
-                                <a class="button is-light is-small" href="{{ path('app_video_game_show', {id: game.id}) }}">Voir</a>
-                                <a class="button is-info is-small" href="{{ path('app_video_game_edit', {id: game.id}) }}">Éditer</a>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        {% endif %}
-    </section>
+        </div>
+    </div>
+
+    {% if games is empty %}
+        {# Notification de l'utilisateur si aucun résultat #}
+        <article class="message is-info">
+            <div class="message-body">
+                <p>Aucun résultat</p>
+            </div>
+        </article>
+    {% else %}
+        {# Affichage des différents jeux #}
+        <table class="table is-striped">
+            <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Difficulté</th>
+                <th>Synopsys</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for game in games %}
+                <tr>
+                    <td>{{ game.name }}</td>
+                    <td>{{ game.difficulty }}</td>
+                    <td>{{ game.synopsis }}</td>
+                    <td class="buttons">
+                        <a class="button is-light is-small"
+                           href="{{ path('app_video_game_show', {id: game.id}) }}">Voir</a>
+                        <a class="button is-info is-small" href="{{ path('app_video_game_edit', {id: game.id}) }}">Éditer</a>
+                        <form method="post" action="{{ path('app_video_game_delete', {id: game.id}) }}">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete_' ~ game.id) }}">
+                            <button class="button is-danger is-small" type="submit">Supprimer</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
 {% endblock %}

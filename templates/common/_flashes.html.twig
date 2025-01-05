@@ -1,6 +1,13 @@
 {% for type, messages in app.flashes %}
+    {% set type_class = type %}
+
+    {# Utilisation d'une classe définie dans le cas d'un message d'erreur#}
+    {% if type == 'error' %}
+        {% set type_class = 'danger' %}
+    {% endif %}
+
     {% for message in messages %}
-        <div class="message is-{{ type }}">
+        <div class="message is-{{ type_class }}">
             <div class="message-body">
                 {{ message }}
             </div>

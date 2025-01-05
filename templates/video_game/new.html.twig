@@ -1,21 +1,21 @@
+
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    {{ game.name }} | Jeux vidéos
+    Création d'un jeu | Jeux vidéos
 {% endblock %}
 
 {% block breadcrum %}
     {% include 'video_game/common/_breadcrumb.html.twig' with { items: [
-        { label: 'Home', href: path('home'), is_active: false},
+        { label: 'Home', href: 'home', is_active: false},
         { label: 'Jeux vidéos', href: path('app_video_game_index'), is_active: false},
-        { label: game.name, href: path('app_video_game_show', {id: game.id}), is_active: false},
-        { label: 'Edit', href: path('app_video_game_edit', {id: game.id}), is_active: true},
+        { label: 'Créer un jeux vidéo', href: path('app_video_game_new'), is_active: true},
     ]} %}
 {% endblock %}
 
 {% block body %}
     <div class="container mb-2">
-        <h1 class="title">Édition du jeu : {{ game.name }}</h1>
+        <h1 class="title">Créer un jeu vidéo</h1>
     </div>
 
     <div>
@@ -24,13 +24,14 @@
                 <div class="content">
                     {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
                     {% include 'video_game/common/_form.html.twig' %}
-                    <button class="button" type="submit">Enregistrer</button>
+                    <a href="{{ path('app_video_game_index') }}" class="button is-danger">Annuler</a>
+                    <button class="button is-primary" type="submit">Créer</button>
                     {{ form_end(form) }}
                 </div>
             </div>
         </div>
     </div>
-
 {% endblock %}
+
 
 

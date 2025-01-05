@@ -1,0 +1,18 @@
+{% use 'form_div_layout.html.twig' %}
+
+{% block text_widget %}
+    {# Ajout de la classe "input" aux classes fournies en paramètre #}
+    {% set css_class = (attr.class | default('')) ~ ' input' %}
+    {# Surcharge de l'option "attr" avec les nouvelles classes CSS #}
+    {% set attr = attr | merge({
+        class: css_class,
+    }) %}
+
+    <div class="control">
+        {#
+            Appel du bloc parent. Si form_div_layout.html.twig avait eu une définition pour twet_widget
+            nous aurions pu simplement appeler : {{ parent() }}
+        #}
+        {{ block('form_widget_simple') }}
+    </div>
+{% endblock %}

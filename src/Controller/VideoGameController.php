@@ -9,7 +9,6 @@ use App\Form\VideoGameType;
 use App\Repository\VideoGameRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -77,4 +76,47 @@ class VideoGameController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+    #[Route('/video-game/new', name: 'app_video_game_new', methods: ['GET', 'POST'] )]
+    public function create(Request $request): Response
+    {
+        $videoGame = new VideoGame();
+
+        $form = $this->createForm(VideoGameType::class, $videoGame);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->entityManager->persist($videoGame);
+            $this->entityManager->flush();
+            $this->addFlash('success', 'Le jeu vidéo a été créé avec succès.');
+            return $this->redirectToRoute('app_video_game_show', ['id' => $videoGame->getId()]);
+        }
+
+        return $this->render('video_game/new.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/video-game/{id}/delete', name: 'app_video_game_delete', requirements: ['id' => '\d+'], methods: ['DELETE'])]
+    public function delete(int $id, Request $request): Response
+    {
+        $videoGame = $this->videoGameRepository->find($id);
+
+        if ($videoGame === null) {
+            throw $this->createNotFoundException('Video game not found');
+        }
+
+        if ($this->isCsrfTokenValid('delete_'.$videoGame->getId(), $request->request->get('_token'))) {
+            // Traitement de la suppression si le token est OK
+            $this->entityManager->remove($videoGame);
+            $this->entityManager->flush();
+            $this->addFlash('success', 'Le jeux vidéo a été supprimé.');
+        } else {
+            // Notification de l'utilisateur si le token est invalide
+            $this->addFlash('error', 'Token CSRF invalide. La suppression n\'a pas pu aboutir.');
+        }
+
+        return $this->redirectToRoute('app_video_game_index');
+    }
+
 }

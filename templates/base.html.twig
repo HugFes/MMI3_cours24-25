@@ -12,6 +12,19 @@
         {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+    <div class="section">
+        {% block breadcrum %}
+            {% include 'video_game/common/_breadcrumb.html.twig' with { items: [
+                { label: 'Home', href: path('home'), is_active: false},
+            ]} %}
+        {% endblock %}
+
+        {% block flashes %}
+            {% include 'common/_flashes.html.twig' %}
+        {% endblock %}
+
+        {% block body %}
+        {% endblock %}
+    </div>
     </body>
 </html>
