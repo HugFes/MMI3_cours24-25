@@ -3,3 +3,7 @@
 {{ form_errors(form) }}
 {{ form_row(form.email) }}
 {{ form_row(form.roles) }}
+
+{% if form.plainPassword is defined %}
+    {{ form_row(form.plainPassword) }}
+{% endif %}

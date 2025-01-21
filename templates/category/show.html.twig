@@ -16,9 +16,12 @@
             <div class="column">
                 <h1 class="title">{{ category.name }}</h1>
             </div>
-            <div class="column is-flex is-justify-content-end">
-                <a class="button" href="{{ path('app_category_edit', {id: category.id}) }}">Éditer</a>
-            </div>
+
+            {% if is_granted('ROLE_EDITOR') %}
+                <div class="column is-flex is-justify-content-end">
+                    <a class="button" href="{{ path('app_category_edit', {id: category.id}) }}">Éditer</a>
+                </div>
+            {% endif %}
         </div>
 
         <div class="card">

@@ -14,12 +14,14 @@
         <div class="column px-0">
             <h1 class="title">Utilisateurs</h1>
         </div>
-        <div class="column px-0">
-            <div class="column is-flex is-justify-content-end">
-                <a class="button" href="{{ path('app_user_new') }}">Créer</a>
-            </div>
 
-        </div>
+        {% if is_granted('ROLE_SUPER_ADMIN') %}
+            <div class="column px-0">
+                <div class="column is-flex is-justify-content-end">
+                    <a class="button" href="{{ path('app_user_new') }}">Créer</a>
+                </div>
+            </div>
+        {% endif %}
     </div>
 
     {% if users is empty %}

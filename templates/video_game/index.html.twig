@@ -14,12 +14,15 @@
         <div class="column px-0">
             <h1 class="title">Jeux vidéos</h1>
         </div>
+
+        {% if is_granted('ROLE_EDITOR') %}
         <div class="column px-0">
             <div class="column is-flex is-justify-content-end">
                 <a class="button" href="{{ path('app_video_game_new') }}">Créer</a>
             </div>
 
         </div>
+        {% endif %}
     </div>
 
     {% if games is empty %}
@@ -55,12 +58,15 @@
                     <td class="buttons">
                         <a class="button is-light is-small"
                            href="{{ path('app_video_game_show', {id: game.id}) }}">Voir</a>
-                        <a class="button is-info is-small" href="{{ path('app_video_game_edit', {id: game.id}) }}">Éditer</a>
-                        <form method="post" action="{{ path('app_video_game_delete', {id: game.id}) }}">
-                            <input type="hidden" name="_method" value="DELETE">
-                            <input type="hidden" name="_token" value="{{ csrf_token('delete_' ~ game.id) }}">
-                            <button class="button is-danger is-small" type="submit">Supprimer</button>
-                        </form>
+
+                        {% if is_granted('ROLE_EDITOR') %}
+                            <a class="button is-info is-small" href="{{ path('app_video_game_edit', {id: game.id}) }}">Éditer</a>
+                            <form method="post" action="{{ path('app_video_game_delete', {id: game.id}) }}">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete_' ~ game.id) }}">
+                                <button class="button is-danger is-small" type="submit">Supprimer</button>
+                            </form>
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}

@@ -9,11 +9,18 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/user')]
 final class UserController extends AbstractController
 {
+    public function __construct(
+        private readonly UserPasswordHasherInterface $userPasswordHasher,
+    )
+    {
+    }
+
     #[Route(name: 'app_user_index', methods: ['GET'])]
     public function index(UserRepository $userRepository): Response
     {
@@ -30,6 +37,14 @@ final class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+//            if ($form->has('plainPassword')) {
+                // MAJ du mot de passe
+                $user = $form->getData();
+                $password = $form->get('plainPassword')->getData();
+                $this->encodePassword($user, $password);
+//            }
+
+
             $entityManager->persist($user);
             $entityManager->flush();
 
@@ -63,6 +78,14 @@ final class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            if ($form->has('plainPassword')) {
+                // MAJ du mot de passe
+                $user = $form->getData();
+                $password = $form->get('plainPassword')->getData();
+                $this->encodePassword($user, $password);
+            }
+
             $entityManager->flush();
 
             return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
@@ -83,5 +106,14 @@ final class UserController extends AbstractController
         }
 
         return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    protected function encodePassword(User $user, ?string $password): void
+    {
+        if ($this->isGranted('ROLE_SUPER_ADMIN') && !empty($password)) {
+            $user->setPassword(
+                $this->userPasswordHasher->hashPassword($user, $password)
+            );
+        }
     }
 }

@@ -14,12 +14,15 @@
         <div class="column px-0">
             <h1 class="title">Catégories</h1>
         </div>
-        <div class="column px-0">
-            <div class="column is-flex is-justify-content-end">
-                <a class="button" href="{{ path('app_category_new') }}">Créer</a>
-            </div>
 
-        </div>
+        {% if is_granted('ROLE_EDITOR') %}
+            <div class="column px-0">
+                <div class="column is-flex is-justify-content-end">
+                    <a class="button" href="{{ path('app_category_new') }}">Créer</a>
+                </div>
+
+            </div>
+        {% endif %}
     </div>
 
     {% if categories is empty %}
@@ -47,13 +50,16 @@
                     <td class="buttons">
                         <a class="button is-light is-small"
                            href="{{ path('app_category_show', {id: category.id}) }}">Voir</a>
-                        <a class="button is-info is-small"
-                           href="{{ path('app_category_edit', {id: category.id}) }}">Éditer</a>
-                        <form method="post" action="{{ path('app_category_delete', {id: category.id}) }}">
-                            <input type="hidden" name="_method" value="DELETE">
-                            <input type="hidden" name="_token" value="{{ csrf_token('delete_' ~ category.id) }}">
-                            <button class="button is-danger is-small" type="submit">Supprimer</button>
-                        </form>
+
+{#                        {% if is_granted('ROLE_EDITOR') %}#}
+                            <a class="button is-info is-small"
+                               href="{{ path('app_category_edit', {id: category.id}) }}">Éditer</a>
+                            <form method="post" action="{{ path('app_category_delete', {id: category.id}) }}">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete_' ~ category.id) }}">
+                                <button class="button is-danger is-small" type="submit">Supprimer</button>
+                            </form>
+{#                        {% endif %}#}
                     </td>
                 </tr>
             {% endfor %}

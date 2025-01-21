@@ -49,6 +49,8 @@ class VideoGameController extends AbstractController
     #[Route('/video-game/{id}/edit', name: 'app_video_game_edit', requirements: ['id' => '\d+'], methods: ['GET', 'PUT'])]
     public function edit(int $id, Request $request): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_EDITOR');
+
         $videoGame = $this->videoGameRepository->find($id);
         if ($videoGame === null) {
             // Déclenchement d'une erreur 404 si aucun jeu vidéo à cet ID
@@ -80,9 +82,12 @@ class VideoGameController extends AbstractController
     #[Route('/video-game/new', name: 'app_video_game_new', methods: ['GET', 'POST'] )]
     public function create(Request $request): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_EDITOR');
+
         $videoGame = new VideoGame();
 
         $form = $this->createForm(VideoGameType::class, $videoGame);
+
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -100,6 +105,8 @@ class VideoGameController extends AbstractController
     #[Route('/video-game/{id}/delete', name: 'app_video_game_delete', requirements: ['id' => '\d+'], methods: ['DELETE'])]
     public function delete(int $id, Request $request): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_EDITOR');
+
         $videoGame = $this->videoGameRepository->find($id);
 
         if ($videoGame === null) {
