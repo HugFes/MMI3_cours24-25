@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Édition de la catégorie : {% endblock %}
+
+{% block breadcrumbs %}
+    {% include 'common/_breadcrumb.html.twig' with { items: [
+        { label: 'Home', href: path('home'), is_active: false},
+        { label: 'Users', href: path('app_user_index'), is_active: false},
+    { label: 'Création', href: path('app_user_new'), is_active: true},
+    ]} %}
+{% endblock %}
+
+{% block body %}
+    <div class="container mb-2">
+        <h1 class="title">Mise à jours de l'utilisateur</h1>
+    </div>
+
+    <div>
+        <div class="card">
+            <div class="card-content">
+                <div class="content">
+                    {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+                    {% include 'user/common/_form.html.twig' %}
+                    <a href="{{ path('app_category_index') }}" class="button is-danger">Annuler</a>
+                    <button class="button is-primary" type="submit">Créer</button>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

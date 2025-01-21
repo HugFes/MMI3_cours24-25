@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Category index{% endblock %}
+
+{% block breadcrumbs %}
+    {% include 'common/_breadcrumb.html.twig' with { items: [
+        { label: 'Home', href: path('home'), is_active: false},
+        { label: 'Catégories', href: path('app_category_index'), is_active: true},
+    ]} %}
+{% endblock %}
+
+{% block body %}
+    <div class="container columns mb-2">
+        <div class="column px-0">
+            <h1 class="title">Catégories</h1>
+        </div>
+        <div class="column px-0">
+            <div class="column is-flex is-justify-content-end">
+                <a class="button" href="{{ path('app_user_new') }}">Créer</a>
+            </div>
+
+        </div>
+    </div>
+
+    {% if users is empty %}
+        {# Notification de l'utilisateur si aucun résultat #}
+        <article class="message is-info">
+            <div class="message-body">
+                <p>Aucun résultat</p>
+            </div>
+        </article>
+    {% else %}
+        {# Affichage des différents jeux #}
+        <table class="table is-striped">
+            <thead>
+            <tr>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.email }} || {{ user.password }}</td>
+                    <td class="buttons">
+                        <a class="button is-light is-small"
+                           href="{{ path('app_user_show', {id: user.id}) }}">Voir</a>
+                        <a class="button is-info is-small"
+                           href="{{ path('app_user_edit', {id: user.id}) }}">Éditer</a>
+{#                        <form method="post" action="{{ path('app_category_delete', {id: category.id}) }}">#}
+{#                            <input type="hidden" name="_method" value="DELETE">#}
+{#                            <input type="hidden" name="_token" value="{{ csrf_token('delete_' ~ category.id) }}">#}
+{#                            <button class="button is-danger is-small" type="submit">Supprimer</button>#}
+{#                        </form>#}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+{% endblock %}
+
