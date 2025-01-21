@@ -41,7 +41,7 @@
             <tbody>
             {% for user in users %}
                 <tr>
-                    <td>{{ user.email }} || {{ user.password }}</td>
+                    <td>{{ user.email }}</td>
                     <td class="buttons">
                         <a class="button is-light is-small"
                            href="{{ path('app_user_show', {id: user.id}) }}">Voir</a>

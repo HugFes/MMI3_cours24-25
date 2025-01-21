@@ -1,20 +1,28 @@
-<nav class="navbar mb-4" role="navigation" aria-label="main navigation">
-    <div id="navbarBasicExample" class="navbar-menu">
-        <div class="navbar-start">
-            <a class="navbar-item{{ 'video_game' in  app.request.attributes.get('_route') ? ' is-active'}}"
-               href="{{ path('app_video_game_index') }}">
-                Jeux Vidéos
-            </a>
+{% if is_granted('IS_AUTHENTICATED_FULLY') %}
 
-            <a class="navbar-item{{ 'category' in  app.request.attributes.get('_route') ? ' is-active'}}"
-               href="{{ path('app_category_index') }}">
-                Catégories
-            </a>
+    <nav class="navbar mb-4" role="navigation" aria-label="main navigation">
+        <div id="navbarBasicExample" class="navbar-menu">
+            <div class="navbar-start">
+                <a class="navbar-item{{ 'video_game' in  app.request.attributes.get('_route') ? ' is-active' }}"
+                   href="{{ path('app_video_game_index') }}">
+                    Jeux Vidéos
+                </a>
 
-            <a class="navbar-item{{ 'user' in  app.request.attributes.get('_route') ? ' is-active'}}"
-               href="{{ path('app_user_index') }}">
-                Utilisateurs
-            </a>
+                <a class="navbar-item{{ 'category' in  app.request.attributes.get('_route') ? ' is-active' }}"
+                   href="{{ path('app_category_index') }}">
+                    Catégories
+                </a>
+
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a class="navbar-item{{ 'user' in  app.request.attributes.get('_route') ? ' is-active' }}"
+                       href="{{ path('app_user_index') }}">
+                        Utilisateurs
+                    </a>
+                {% endif %}
+
+                <a class="navbar-item" href="{{ path('app_logout') }}">Déconnexion</a>
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
+
+{% endif %}
