@@ -8,6 +8,13 @@
 * composer
 * symfony-cli
 
+## Installation
+
+1. `symfony composer install`
+2. `symfony console doctrine:database:create`
+3. `symfony console doctrine:migrations:migrate -n`
+4. `symfony console doctrine:fixtures:load`
+
 
 ## Infos complémentaires
 
